@@ -1,4 +1,3 @@
-import os
 import numpy as np
 
 class matrix:
@@ -13,9 +12,13 @@ class matrix:
 
     
 
-    def __init__(self,m,n,xstart,ystart,xend,yend,entry):
-        for i in range(m):
-            for j in range (n):
-                self.mat[i][j] = entry[m][n]
+    def __init__(self,matrix,dimensions):
+        self.m = dimensions[0]
+        self.n = dimensions[1]
+        self.xstart = dimensions[2]
+        self.ystart = dimensions[3]
+        self.xend = dimensions[4]
+        self.yend = dimensions[5]
+        self.data = np.array(matrix)
 
-    def print():
+    #def print():
