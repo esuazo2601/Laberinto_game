@@ -11,12 +11,23 @@ class matrix:
     xend = 0
     yend = 0
 
-    cell_size = 80
-
     def __init__(self, matrix, dimensions):
         # Dimensiones de la matriz
         self.m = dimensions[0]
         self.n = dimensions[1]
+        self.visited = np.zeros((self.m,self.n),dtype=bool)
+        self.steps = 0
+
+        # Ajustar el tamaño de la celda según el número de columnas
+        if self.n >= 20:
+            self.cell_size = 30
+        elif self.n >= 10:
+            self.cell_size = 40
+        else:
+            self.cell_size = 80
+
+        # Ajustar el tamaño de la fuente
+        self.font_size = min(self.cell_size // 2, 35)
 
         # Posicion de inicio en x e y 
         self.xstart = dimensions[2]
@@ -29,6 +40,22 @@ class matrix:
         # Matriz en sí
         self.data = np.array(matrix)
 
+    def increaseSteps(self):
+        self.steps+=1
+    def getSteps(self):
+        return self.steps
+    
+    def setVisitedFalse(self,x,y):
+        self.visited[x][y] = False
+    def setVisitedTrue(self,x,y):
+        self.visited[x][y] = True
+
+    def getXStart(self):
+        return self.xstart
+    def getYStart(self):
+        return self.ystart
+
+    
     def print(self, screen, posx, posy):
         for i in range(self.m):
             for j in range(self.n):
@@ -40,7 +67,7 @@ class matrix:
                 value = self.data[i][j]
 
                 # Textos para los valores normales y para el valor de llegada
-                font = pygame.font.SysFont('Corbel', 35)
+                font = pygame.font.SysFont('Corbel', self.font_size)
                 final = font.render('G', False, (255, 255, 255))
                 text = font.render(str(value), True, (255, 255, 255))
                 
@@ -53,8 +80,7 @@ class matrix:
                     screen.blit(text, (x + self.cell_size // 2 - text.get_width() // 2, y + self.cell_size // 2 - text.get_height() // 2))
                     # Destacar la celda de inicio con un círculo blanco sin rellenar
                     if i == self.xstart and j == self.ystart:
-                        pygame.draw.circle(surface=screen, color=(255, 255, 255), center=(int(x + self.cell_size / 2), int(y + self.cell_size / 2)), radius = int(self.cell_size / 2.2), width=3)
-
+                        pygame.draw.circle(screen, (255, 255, 255), (int(x + self.cell_size / 2), int(y + self.cell_size / 2)), int(self.cell_size / 2.2), 3)
 
 
 

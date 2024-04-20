@@ -1,13 +1,14 @@
 import pygame
 from objects import matrix
 from load_matrix import leer_archivo
+from algorithms import DFS
 
 #ToDo: Cambiar de puzzle con las flechas
 
 # pygame setup
 pygame.init()
-width = 800
-height = 640
+width = 1020
+height = 800
 screen = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 running = True
@@ -23,29 +24,41 @@ for i in range(cant_matrices):
     mat = matrix(matrices[i],dimensiones[i])
     puzzles.append(mat)
 
-print(puzzles[0].data)
-#
+DFS(x=puzzles[0].getXStart(),y=puzzles[0].getYStart(),matrix=puzzles[0])
+print(puzzles[0].getSteps())
+
 
 current_mat = 0
-mat_counter = smallfont.render(f'{current_mat + 1}/{cant_matrices}',True,(0,0,0))
+steps = 0
 
-while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+""" while running:
+    current_puzzle = puzzles[current_mat]
+    # event manager
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                current_mat = (current_mat - 1) % len(puzzles) 
+            if event.key == pygame.K_RIGHT:
+                current_mat = (current_mat + 1) % len(puzzles)
+            if event.key == pygame.K_ESCAPE:
+                running = False
         if event.type == pygame.QUIT:
             running = False
-
-    # fill the screen with a color to wipe away anything from last frame
+        
     screen.fill("white")
-    screen.blit(mat_counter,(width/2,height - 60))
-    
-    current_puzzle = puzzles[current_mat]
+    #Contador de puzzle inferior
+    mat_counter = smallfont.render(f'{current_mat + 1}/{cant_matrices}',True,(0,0,0))
+    screen.blit(mat_counter,(width/2 - mat_counter.get_width() / 2,height - 60))
+    #Contador de pasos de solucion
+    step_counter = smallfont.render(f'Pasos para solución: {steps}',True,(0,0,0))
+    screen.blit(step_counter,(width/2 - step_counter.get_width() / 2, height /2 - 350 ))
+
+    #Para mostrar el puzzle actual
     current_puzzle.print(screen, (width / 2) - (current_puzzle.cell_size * current_puzzle.n)/2, height / 4)
 
     # flip() the display to put your work on screen
     pygame.display.flip()
 
-    clock.tick(60)  # limits FPS to 60
+    clock.tick(60)
 
-pygame.quit() 
+pygame.quit()  """
