@@ -17,6 +17,7 @@ class matrix:
         self.n = dimensions[1]
         self.visited = np.zeros((self.m,self.n),dtype=bool)
         self.steps = 0
+        #self.prev = (self.xstart,self.ystart)
 
         # Ajustar el tamaño de la celda según el número de columnas
         if self.n >= 20:
@@ -40,22 +41,12 @@ class matrix:
         # Matriz en sí
         self.data = np.array(matrix)
 
-    def increaseSteps(self):
-        self.steps+=1
-    def getSteps(self):
-        return self.steps
-    
-    def setVisitedFalse(self,x,y):
-        self.visited[x][y] = False
-    def setVisitedTrue(self,x,y):
-        self.visited[x][y] = True
 
-    def getXStart(self):
-        return self.xstart
-    def getYStart(self):
-        return self.ystart
+    def flush(self):
+        self.visited = np.zeros((self.m,self.n),dtype=bool)
+        self.steps = 0
 
-    
+
     def print(self, screen, posx, posy):
         for i in range(self.m):
             for j in range(self.n):
