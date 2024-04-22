@@ -24,17 +24,7 @@ for i in range(cant_matrices):
     mat = matrix(matrices[i],dimensiones[i])
     puzzles.append(mat)
 
-#DFS(x=puzzles[0].xstart,y=puzzles[0].ystart,matrix=puzzles[0])
-
-print(puzzles[2].data)
-
-#puzzles[0].flush()
-
-#uniformCost(x=puzzles[0].xstart,y=puzzles[0].ystart,matrix=puzzles[0])
-
-#print(puzzles[0].steps) 
-
-steps = -1
+steps = 0
 current_mat = 0
 
 while running:

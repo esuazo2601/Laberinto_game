@@ -2,7 +2,7 @@ from objects import matrix
 import heapq
 
 def isInvalidMove(x,y, matrix:matrix):
-    return x < 0 or y < 0 or x >= matrix.n or y >= matrix.m or matrix.visited[x][y]
+    return x < 0 or y < 0 or x >= matrix.m or y >= matrix.n or matrix.visited[x][y]
 
 def DFS(x, y, matrix:matrix):
     if isInvalidMove(x,y,matrix):
@@ -15,6 +15,7 @@ def DFS(x, y, matrix:matrix):
         return
 
     matrix.visited[x][y] = True
+
     #Moverse abajo
     DFS(x = x, y = y - matrix.data[x][y], matrix = matrix)
     #Moverse a la derecha
