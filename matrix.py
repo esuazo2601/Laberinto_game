@@ -15,9 +15,16 @@ class matrix:
         # Dimensiones de la matriz
         self.m = dimensions[0]
         self.n = dimensions[1]
-        self.visited = np.zeros((self.m,self.n),dtype=bool)
-        self.steps = 0
-        #self.prev = (self.xstart,self.ystart)
+
+        self.visited_dfs = np.zeros((self.m,self.n),dtype=bool)
+        self.current_path_dfs = []
+        self.shortest_path_dfs = []
+        self.shortest_path_length = float('inf')
+
+        self.steps_dfs = 0
+        
+        self.visited_ucost = np.zeros((self.m,self.n),dtype=bool)
+        self.steps_ucost = 0
 
         # Ajustar el tamaño de la celda según el número de columnas
         if self.n >= 20:
@@ -41,7 +48,7 @@ class matrix:
         # Matriz en sí
         self.data = np.array(matrix)
 
-
+    #Limpiar los vistados y los pasos
     def flush(self):
         self.visited = np.zeros((self.m,self.n),dtype=bool)
         self.steps = 0
@@ -69,9 +76,6 @@ class matrix:
                 elif value != 0:
                     pygame.draw.rect(screen, (0, 0, 0), (x, y, self.cell_size, self.cell_size))
                     screen.blit(text, (x + self.cell_size // 2 - text.get_width() // 2, y + self.cell_size // 2 - text.get_height() // 2))
-                    # Destacar la celda de inicio con un círculo blanco sin rellenar
+                    # Destacar la celda de inicio con un círculo blanco
                     if i == self.xstart and j == self.ystart:
                         pygame.draw.circle(screen, (255, 255, 255), (int(x + self.cell_size / 2), int(y + self.cell_size / 2)), int(self.cell_size / 2.2), 3)
-
-
-

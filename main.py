@@ -1,5 +1,5 @@
 import pygame
-from objects import matrix
+from matrix import matrix
 from load_matrix import leer_archivo
 from algorithms import DFS, uniformCost,getMinorSteps
 
@@ -26,10 +26,12 @@ for i in range(cant_matrices):
 
 steps = 0
 current_mat = 0
+#Los laberintos quedan en la lista puzzles
 
+#Mainloop
 while running:
     current_puzzle = puzzles[current_mat]
-    # event manager
+    # eventos
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -47,11 +49,12 @@ while running:
             running = False
         
     screen.fill("white")
+    
     #Contador de puzzle inferior
     mat_counter = smallfont.render(f'{current_mat + 1}/{cant_matrices}',True,(0,0,0))
     screen.blit(mat_counter,(width/2 - mat_counter.get_width() / 2,height - 60))
+    
     #Contador de pasos de solucion
-
     step_counter = smallfont.render(f'Pasos para solución: {steps}',True,(0,0,0))
     screen.blit(step_counter,(width/2 - step_counter.get_width() / 2, height /2 - 350 ))
 
