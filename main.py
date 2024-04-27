@@ -44,14 +44,19 @@ while running:
             if event.key == pygame.K_d:
                 # Ejecutar DFS
                 DFS(current_puzzle.xstart, current_puzzle.ystart, current_puzzle, 0)
-                print("DFS: ", current_puzzle.shortest_path_dfs)
+                if current_puzzle.shortest_path_length == -1 or current_puzzle.shortest_path_length == 0 or current_puzzle.shortest_path_length == float('inf'):
+                    current_puzzle.shortest_path_length = 'NO HAY SOLUCIÓN'
+                print(current_puzzle.shortest_path_length)
 
                 steps = current_puzzle.shortest_path_length
                 current_puzzle.last_algorithm = 'DFS'
             if event.key == pygame.K_f:
                 # Ejecutar uniformCost
                 steps, path_ucost = uniformCost(current_puzzle.xstart, current_puzzle.ystart, current_puzzle)
-                print("UCOST: ",path_ucost)
+                if steps == -1 or steps == 0 or steps == float('inf'):
+                    steps = 'NO HAY SOLUCIÓN'
+
+                print(steps)
                 current_puzzle.steps_ucost = steps
                 current_puzzle.path_ucost = path_ucost
                 current_puzzle.last_algorithm = 'UCOST'
@@ -66,11 +71,12 @@ while running:
     screen.blit(mat_counter, (width/2 - mat_counter.get_width() / 2, height - 60))
     
     # Contador de pasos de solucion
-    if steps == -1 or steps == 0 or steps == float('inf'):
-        steps = 'NO HAY SOLUCIÓN'
-
-    step_counter = smallfont.render(f'Pasos para solución: {steps}', True, (0, 0, 0))
-    screen.blit(step_counter, (width/2 - step_counter.get_width() / 2, height / 2 - 350))
+    if current_puzzle.last_algorithm == 'DFS':
+        step_counter = smallfont.render(f'Pasos para solución: {current_puzzle.shortest_path_length}', True, (0, 0, 0))
+        screen.blit(step_counter, (width/2 - step_counter.get_width() / 2, height / 2 - 350))
+    else:
+        step_counter = smallfont.render(f'Pasos para solución: {current_puzzle.steps_ucost}', True, (0, 0, 0))
+        screen.blit(step_counter, (width/2 - step_counter.get_width() / 2, height / 2 - 350))
 
     # Para mostrar el puzzle actual
     current_puzzle.print(screen, (width / 2) - (current_puzzle.cell_size * current_puzzle.n)/2, height / 4, show_dfs=current_puzzle.last_algorithm == 'DFS', show_ucost=current_puzzle.last_algorithm == 'UCOST')

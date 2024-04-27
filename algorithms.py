@@ -6,6 +6,16 @@ def isInvalidMove(x, y, matrix):
         return True
     return False
 
+def construct_path(path, xend, yend):
+    result = []
+    current = (xend, yend)
+    while current:
+        result.append(current)
+        current = path[current]
+    result.reverse()
+    return result
+
+
 def DFS(x, y, matrix:matrix, steps):
     #Si el movimiento no es valido, no seguimos por ahi
     if isInvalidMove (x,y,matrix) or matrix.visited_dfs[x][y]:
@@ -80,13 +90,3 @@ def uniformCost(x, y, matrix):
 
     # Si no se encuentra un camino válido, se devuelve -1 y camino vacio
     return -1, []
-
-def construct_path(path, xend, yend):
-    result = []
-    current = (xend, yend)
-    while current:
-        result.append(current)
-        current = path[current]
-    result.reverse()
-    return result
-
